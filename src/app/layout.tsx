@@ -56,8 +56,8 @@ export const metadata: Metadata = {
       },
       {
         url: "/images/logo.png",
-        width: 885,
-        height: 831,
+        width: 910,
+        height: 205,
         alt: "Aydın Hafriyat logo",
       },
     ],

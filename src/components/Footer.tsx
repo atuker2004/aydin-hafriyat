@@ -20,10 +20,10 @@ export function Footer() {
           <Image
             src="/images/logo.png"
             alt="Aydın Hafriyat"
-            width={160}
-            height={150}
+            width={910}
+            height={205}
             unoptimized
-            className="h-14 w-auto object-contain"
+            className="h-11 w-auto object-contain object-left"
           />
           <p className="text-sm text-dust">
             Profesyonel hafriyat ve saha çözümleri
