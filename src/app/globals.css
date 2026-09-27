@@ -7,9 +7,9 @@
   --dust: #a8aea2;
   --sand: #e8e4d9;
   --paper: #f3f0e8;
-  --safety: #ffc107;
-  --ochre: #e6a800;
-  --ochre-deep: #c49200;
+  --safety: #e53935;
+  --ochre: #c62828;
+  --ochre-deep: #a31d1d;
   --background: var(--paper);
   --foreground: var(--ink);
 }

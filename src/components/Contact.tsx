@@ -159,7 +159,7 @@ export function Contact() {
 
               <button
                 type="submit"
-                className="mt-8 w-full bg-safety py-4 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-ochre sm:w-auto sm:px-10"
+                className="mt-8 w-full bg-safety py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-ochre sm:w-auto sm:px-10"
               >
                 Gönder
               </button>

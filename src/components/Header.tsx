@@ -63,7 +63,7 @@ export function Header() {
             <button
               type="button"
               onClick={openCall}
-              className="border border-safety/40 bg-safety/10 px-4 py-2 text-sm font-semibold tracking-wide text-safety transition-colors hover:bg-safety hover:text-ink"
+              className="border border-safety/40 bg-safety/10 px-4 py-2 text-sm font-semibold tracking-wide text-safety transition-colors hover:bg-safety hover:text-white"
             >
               Hemen Ara
             </button>

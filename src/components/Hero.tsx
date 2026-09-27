@@ -91,7 +91,7 @@ export function Hero() {
         <div className="animate-fade-up delay-3 mt-10 flex flex-wrap items-center gap-4">
           <a
             href="#iletisim"
-            className="bg-safety px-7 py-3.5 text-sm font-semibold tracking-wide text-ink transition-colors hover:bg-ochre"
+            className="bg-safety px-7 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-ochre"
           >
             Teklif Al
           </a>
