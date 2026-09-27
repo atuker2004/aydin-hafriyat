@@ -42,11 +42,11 @@ export function Header() {
             <Image
               src="/images/logo.png"
               alt="Aydın Hafriyat"
-              width={910}
-              height={205}
+              width={1000}
+              height={163}
               priority
               unoptimized
-              className="h-9 w-auto object-contain md:h-12"
+              className="h-7 w-auto object-contain md:h-10"
             />
           </a>
 
