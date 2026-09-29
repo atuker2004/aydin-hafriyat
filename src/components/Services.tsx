@@ -45,6 +45,9 @@ export function Services() {
             Her iş kalemi, doğru makine ve doğru planlama ile yönetilir. Küçük
             arsa kazısından büyük şantiye hazırlığına kadar yanınızdayız.
           </p>
+          <p className="mt-5 font-display text-2xl font-semibold tracking-[0.18em] text-ochre uppercase md:text-3xl">
+            +50 Yıllık Tecrübe
+          </p>
         </div>
 
         <ul className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2">

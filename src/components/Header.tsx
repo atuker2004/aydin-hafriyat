@@ -7,6 +7,7 @@ import { CallModal } from "@/components/CallModal";
 const links = [
   { href: "#hizmetler", label: "Hizmetler" },
   { href: "#hakkimizda", label: "Hakkımızda" },
+  { href: "#referanslar", label: "Referanslar" },
   { href: "#surec", label: "Süreç" },
   { href: "#iletisim", label: "İletişim" },
 ];
