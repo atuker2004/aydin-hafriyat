@@ -3,11 +3,32 @@
 import { FormEvent, useState } from "react";
 
 export function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    setStatus("sending");
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
+      });
+
+      if (!response.ok) {
+        setStatus("error");
+        return;
+      }
+
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -77,10 +98,10 @@ export function Contact() {
           onSubmit={handleSubmit}
           className="border border-white/10 bg-ash/60 p-6 md:p-10"
         >
-          {sent ? (
+          {status === "sent" ? (
             <div className="flex min-h-[320px] flex-col items-start justify-center">
               <p className="font-display text-3xl tracking-wide text-safety uppercase">
-                Mesajınız alındı
+                Mesajınız gönderildi
               </p>
               <p className="mt-4 max-w-sm text-sand/75">
                 En kısa sürede sizinle iletişime geçeceğiz. Acil işler için
@@ -113,6 +134,18 @@ export function Contact() {
                   />
                 </label>
               </div>
+
+              <label className="mt-5 block">
+                <span className="text-xs tracking-[0.15em] text-dust uppercase">
+                  E-posta (isteğe bağlı)
+                </span>
+                <input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  className="mt-2 w-full border-b border-white/20 bg-transparent py-3 text-paper outline-none transition-colors focus:border-safety"
+                />
+              </label>
 
               <label className="mt-5 block">
                 <span className="text-xs tracking-[0.15em] text-dust uppercase">
@@ -157,11 +190,24 @@ export function Contact() {
                 />
               </label>
 
+              <label className="sr-only" aria-hidden="true">
+                Web sitesi
+                <input name="website" tabIndex={-1} autoComplete="off" />
+              </label>
+
+              {status === "error" && (
+                <p role="alert" className="mt-5 text-sm text-safety">
+                  Mesaj gönderilemedi. Lütfen tekrar deneyin veya bizi
+                  telefonla arayın.
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="mt-8 w-full bg-safety py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-ochre sm:w-auto sm:px-10"
+                disabled={status === "sending"}
+                className="mt-8 w-full bg-safety py-4 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-ochre disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
               >
-                Gönder
+                {status === "sending" ? "Gönderiliyor..." : "Gönder"}
               </button>
             </>
           )}
