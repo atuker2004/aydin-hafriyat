@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const slides = [
   {
@@ -22,26 +22,18 @@ const INTERVAL_MS = 2500;
 
 export function Hero() {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  const goTo = useCallback((index: number) => {
-    setActive((index + slides.length) % slides.length);
-  }, []);
 
   useEffect(() => {
-    if (paused) return;
     const id = window.setInterval(() => {
       setActive((current) => (current + 1) % slides.length);
     }, INTERVAL_MS);
     return () => window.clearInterval(id);
-  }, [paused, active]);
+  }, []);
 
   return (
     <section
       id="anasayfa"
       className="grain relative flex min-h-[100svh] items-center overflow-hidden bg-ink"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
     >
       <div className="absolute inset-0">
         {slides.map((slide, index) => {
@@ -116,19 +108,16 @@ export function Hero() {
               role="tab"
               aria-selected={index === active}
               aria-label={`Görsel ${index + 1}`}
-              onClick={() => goTo(index)}
+              onClick={() => setActive(index)}
               className="group relative h-1.5 overflow-hidden rounded-full bg-paper/25 transition-all"
               style={{ width: index === active ? 36 : 12 }}
             >
               {index === active && (
                 <span
-                  key={`progress-${active}-${paused}`}
+                  key={`progress-${active}`}
                   className="absolute inset-y-0 left-0 bg-safety"
                   style={{
-                    animation: paused
-                      ? "none"
-                      : `hero-progress ${INTERVAL_MS}ms linear forwards`,
-                    width: paused ? "100%" : undefined,
+                    animation: `hero-progress ${INTERVAL_MS}ms linear forwards`,
                   }}
                 />
               )}
