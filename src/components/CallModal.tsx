@@ -41,7 +41,7 @@ export function CallModal({ open, onClose }: CallModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-5"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-5 animate-modal-overlay"
       role="dialog"
       aria-modal="true"
       aria-labelledby="call-modal-title"
@@ -53,7 +53,7 @@ export function CallModal({ open, onClose }: CallModalProps) {
         onClick={onClose}
       />
 
-      <div className="relative w-full max-w-sm border border-white/10 bg-ash p-6 shadow-2xl md:p-8">
+      <div className="relative w-full max-w-sm border border-white/10 bg-ash p-6 shadow-2xl animate-modal-panel md:p-8">
         <button
           type="button"
           onClick={onClose}
