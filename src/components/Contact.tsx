@@ -1,34 +1,61 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { siteConfig } from "@/lib/site";
 
 export function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
+  const [mailtoUrl, setMailtoUrl] = useState("");
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
 
     const formData = new FormData(e.currentTarget);
+    const name = String(formData.get("name") ?? "").trim();
+    const phone = String(formData.get("phone") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const rawService = String(formData.get("service") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(formData.entries())),
-      });
+    const serviceLabel: Record<string, string> = {
+      kazi: "Kazı ve Hafriyat",
+      dolgu: "Dolgu ve Sıkıştırma",
+      moloz: "Moloz Taşıma",
+      santiye: "Şantiye Hazırlığı",
+      diger: "Diğer",
+    };
 
-      if (!response.ok) {
-        setStatus("error");
-        return;
-      }
+    const subject = `Proje görüşmesi talebi${name ? ` - ${name}` : ""}`;
+    const body = [
+      "Merhaba,",
+      "",
+      `Ad Soyad: ${name || "Belirtilmedi"}`,
+      `Telefon: ${phone || "Belirtilmedi"}`,
+      `E-posta: ${email || "Belirtilmedi"}`,
+      `Hizmet: ${serviceLabel[rawService] ?? "Belirtilmedi"}`,
+      "",
+      "Mesaj:",
+      message || "Mesaj eklenmedi.",
+    ].join("\n");
 
-      setStatus("sent");
-    } catch {
-      setStatus("error");
+    const nextMailtoUrl = `mailto:${siteConfig.email}?${new URLSearchParams({
+      subject,
+      body,
+    }).toString()}`;
+
+    setMailtoUrl(nextMailtoUrl);
+    window.location.href = nextMailtoUrl;
+
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(`${subject}\n\n${body}`).catch(() => {});
     }
+
+    window.setTimeout(() => {
+      setStatus("error");
+    }, 1200);
   }
 
   return (
@@ -197,9 +224,19 @@ export function Contact() {
 
               {status === "error" && (
                 <p role="alert" className="mt-5 text-sm text-safety">
-                  Mesaj gönderilemedi. Lütfen tekrar deneyin veya bizi
-                  telefonla arayın.
+                  E-posta uygulaması otomatik açılmadı. Mail istemcisi yoksa,
+                  aşağıdaki bağlantıyı kullanarak veya mesajı kopyalayıp
+                  manuel olarak info@aydin-hafriyat.com adresine gönderebilirsiniz.
                 </p>
+              )}
+
+              {mailtoUrl && (
+                <a
+                  href={mailtoUrl}
+                  className="mt-5 inline-block text-sm font-medium text-safety underline underline-offset-4"
+                >
+                  E-postayı aç
+                </a>
               )}
 
               <button
